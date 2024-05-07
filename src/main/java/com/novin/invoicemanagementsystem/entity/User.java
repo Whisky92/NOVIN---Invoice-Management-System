@@ -25,8 +25,6 @@ public class User {
     @NonNull
     @Column(length = 60)
     private String password;
-    @NonNull
-    private boolean enabled = false;
     @ManyToMany
     @JoinTable(
             name = "roles_of_users",

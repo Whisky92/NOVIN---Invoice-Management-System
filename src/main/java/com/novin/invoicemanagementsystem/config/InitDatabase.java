@@ -1,14 +1,18 @@
 package com.novin.invoicemanagementsystem.config;
 
 import com.novin.invoicemanagementsystem.entity.Role;
+import com.novin.invoicemanagementsystem.entity.User;
 import com.novin.invoicemanagementsystem.repository.RoleRepository;
 import com.novin.invoicemanagementsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -19,6 +23,8 @@ public class InitDatabase implements ApplicationListener<ContextRefreshedEvent> 
     private final UserRepository userRepository;
     @Autowired
     private final RoleRepository roleRepository;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -27,22 +33,72 @@ public class InitDatabase implements ApplicationListener<ContextRefreshedEvent> 
             return;
         }
         createRoles();
+        createUsers();
 
         alreadySetup = true;
     }
 
     @Transactional
-    protected void createRoles() {
-        createRoleIfNotExists("ADMINISTRATOR",
+    void createRoles() {
+        createInitialRole("ADMINISTRATOR",
                 "Can view the administration page and all the other pages");
-        createRoleIfNotExists("ACCOUNTANT",
+        createInitialRole("ACCOUNTANT",
                 "Can create invoices, view the list of invoices and the details of individual invoices");
-        createRoleIfNotExists("USER",
+        createInitialRole("USER",
                 "Can view the list of invoices and the details of individual invoices");
     }
 
     @Transactional
-    protected void createRoleIfNotExists(String name, String description) {
+    void createUsers() {
+        createInitialAdministrator();
+        createInitialAccountant();
+        createInitialUser();
+    }
+
+    @Transactional
+    void createInitialAdministrator() {
+        if (userRepository.findByUserName("INIT_ADMINISTRATOR") == null) {
+            User administrator = User.builder()
+                    .firstName("Initial")
+                    .lastName("Administrator")
+                    .userName("INIT_ADMINISTRATOR")
+                    .password(passwordEncoder.encode("administrator"))
+                    .roles(List.of(roleRepository.findByName("ADMINISTRATOR")))
+                    .build();
+            userRepository.save(administrator);
+        }
+    }
+
+    @Transactional
+    void createInitialAccountant() {
+        if (userRepository.findByUserName("INIT_ACCOUNTANT") == null) {
+            User accountant = User.builder()
+                    .firstName("Initial")
+                    .lastName("Accountant")
+                    .userName("INIT_ACCOUNTANT")
+                    .password(passwordEncoder.encode("accountant"))
+                    .roles(List.of(roleRepository.findByName("ACCOUNTANT")))
+                    .build();
+            userRepository.save(accountant);
+        }
+    }
+
+    @Transactional
+    void createInitialUser() {
+        if (userRepository.findByUserName("INIT_USER") == null) {
+            User user = User.builder()
+                    .firstName("Initial")
+                    .lastName("User")
+                    .userName("INIT_USER")
+                    .password(passwordEncoder.encode("user"))
+                    .roles(List.of(roleRepository.findByName("USER")))
+                    .build();
+            userRepository.save(user);
+        }
+    }
+
+    @Transactional
+    void createInitialRole(String name, String description) {
         Role role = roleRepository.findByName(name);
         if (role == null) {
             role = Role.builder()
@@ -52,5 +108,4 @@ public class InitDatabase implements ApplicationListener<ContextRefreshedEvent> 
             roleRepository.save(role);
         }
     }
-
 }
