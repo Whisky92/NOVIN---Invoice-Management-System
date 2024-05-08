@@ -57,7 +57,7 @@ public class InitDatabase implements ApplicationListener<ContextRefreshedEvent> 
 
     @Transactional
     void createInitialAdministrator() {
-        if (userRepository.findByUserName("INIT_ADMINISTRATOR") == null) {
+        if (userRepository.findByUserName("INIT_ADMINISTRATOR").isEmpty()) {
             User administrator = User.builder()
                     .firstName("Initial")
                     .lastName("Administrator")
@@ -71,7 +71,7 @@ public class InitDatabase implements ApplicationListener<ContextRefreshedEvent> 
 
     @Transactional
     void createInitialAccountant() {
-        if (userRepository.findByUserName("INIT_ACCOUNTANT") == null) {
+        if (userRepository.findByUserName("INIT_ACCOUNTANT").isEmpty()) {
             User accountant = User.builder()
                     .firstName("Initial")
                     .lastName("Accountant")
@@ -85,7 +85,7 @@ public class InitDatabase implements ApplicationListener<ContextRefreshedEvent> 
 
     @Transactional
     void createInitialUser() {
-        if (userRepository.findByUserName("INIT_USER") == null) {
+        if (userRepository.findByUserName("INIT_USER").isEmpty()) {
             User user = User.builder()
                     .firstName("Initial")
                     .lastName("User")
