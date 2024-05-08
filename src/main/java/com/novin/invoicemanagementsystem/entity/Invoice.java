@@ -1,7 +1,15 @@
 package com.novin.invoicemanagementsystem.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -14,16 +22,16 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
+    @NotBlank
     private String customerName;
-    @NonNull
+    @NotNull
     private Date creationDate;
-    @NonNull
+    @NotNull
     private Date deadline;
-    @NonNull
+    @NotBlank
     private String itemName;
-    @NonNull
+    @NotBlank
     private String comment;
-    @NonNull
+    @NotNull
     private Integer price;
 }
