@@ -1,12 +1,23 @@
 package com.novin.invoicemanagementsystem.service;
 
 import com.novin.invoicemanagementsystem.entity.User;
-import com.novin.invoicemanagementsystem.model.UserDto;
+import com.novin.invoicemanagementsystem.model.RoleInput;
+import com.novin.invoicemanagementsystem.model.UserInput;
+import com.novin.invoicemanagementsystem.model.UserOutput;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
-    List<UserDto> getAllUsers();
+    User createUser(UserInput userInput);
 
-    UserDto deleteById(Long id);
+    Optional<User> findUserByUsername(String username);
+
+    User saveUser(User user);
+
+    List<UserOutput> getAllUsers();
+
+    UserOutput deleteById(Long id);
+
+    String setRoleOfUser(Long id, RoleInput roleInput);
 }

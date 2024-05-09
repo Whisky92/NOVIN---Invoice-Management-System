@@ -22,21 +22,14 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank(message = "First name is mandatory")
     private String firstName;
-
-    @NotBlank(message = "Last name is mandatory")
     private String lastName;
 
-    @NotBlank(message = "Username is mandatory")
     @Column(unique = true)
     private String userName;
 
-    @NotBlank(message = "Password is mandatory")
     @Column(length = 60)
     private String password;
-
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

@@ -19,11 +19,8 @@ import java.util.List;
 public class InitDatabase implements ApplicationListener<ContextRefreshedEvent> {
     boolean alreadySetup = false;
 
-    @Autowired
     private final UserRepository userRepository;
-    @Autowired
     private final RoleRepository roleRepository;
-    @Autowired
     private final PasswordEncoder passwordEncoder;
 
     @Override

@@ -1,6 +1,7 @@
 package com.novin.invoicemanagementsystem.model;
 
 import com.novin.invoicemanagementsystem.entity.Role;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
+public class UserOutput {
     private Long id;
     private String firstName;
     private String lastName;

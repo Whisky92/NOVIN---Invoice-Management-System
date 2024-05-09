@@ -1,15 +1,14 @@
 package com.novin.invoicemanagementsystem.service;
 
-import com.novin.invoicemanagementsystem.model.AuthResponse;
 import com.novin.invoicemanagementsystem.entity.Token;
 import com.novin.invoicemanagementsystem.entity.User;
+import com.novin.invoicemanagementsystem.model.AuthResponse;
 import com.novin.invoicemanagementsystem.model.UserCredentials;
+import com.novin.invoicemanagementsystem.model.UserInput;
 import com.novin.invoicemanagementsystem.repository.TokenRepository;
-import com.novin.invoicemanagementsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,32 +16,23 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-    private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final UserService userService;
 
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
+
 
     @Override
-    public AuthResponse register(User userData) {
+    public AuthResponse register(UserInput userInput) {
 
-        System.out.println("megyen:)");
-        System.out.println("userData: " + userData);
-
-        if (userRepository.findByUserName(userData.getUsername()).isPresent()) {
+        if (userService.findUserByUsername(userInput.getUserName()).isPresent()) {
              return new AuthResponse(null, "A user with such username already exists");
         }
 
-        User newUser = User.builder()
-                .firstName(userData.getFirstName())
-                .lastName(userData.getLastName())
-                .userName(userData.getUsername())
-                .password(passwordEncoder.encode(userData.getPassword()))
-                .roles(userData.getRoles())
-                .build();
+        User newUser = userService.createUser(userInput);
 
-        newUser = userRepository.save(newUser);
+        newUser = userService.saveUser(newUser);
         String jwtToken = jwtService.generateToken(newUser);
         saveUserToken(jwtToken, newUser);
 
@@ -56,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
                         credentials.getUserName(),
                         credentials.getPassword()
                 ));
-        User user = userRepository.findByUserName(credentials.getUserName()).orElseThrow();
+        User user = userService.findUserByUsername(credentials.getUserName()).orElseThrow();
         String jwtToken = jwtService.generateToken(user);
 
         revokeAllTokenByUser(user);

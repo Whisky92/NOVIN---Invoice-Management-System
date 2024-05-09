@@ -3,6 +3,7 @@ package com.novin.invoicemanagementsystem.controller;
 import com.novin.invoicemanagementsystem.model.AuthResponse;
 import com.novin.invoicemanagementsystem.entity.User;
 import com.novin.invoicemanagementsystem.model.UserCredentials;
+import com.novin.invoicemanagementsystem.model.UserInput;
 import com.novin.invoicemanagementsystem.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody User userData) {
-        return ResponseEntity.ok(authService.register(userData));
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody UserInput userInput) {
+        return ResponseEntity.ok(authService.register(userInput));
     }
 
     @PostMapping("/login")

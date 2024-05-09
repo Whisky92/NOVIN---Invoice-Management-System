@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class UserCredentials {
     @NotBlank(message = "Username is mandatory")
     private String userName;
+
     @NotBlank(message = "Password is mandatory")
     private String password;
 }
