@@ -21,7 +21,7 @@ public class ConfigUtils {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repository.findByUserName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User registration was successful"));
+                .orElseThrow(() -> new UsernameNotFoundException("There is no user with such username"));
     }
 
     @Bean

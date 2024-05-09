@@ -1,11 +1,10 @@
 package com.novin.invoicemanagementsystem.controller;
 
 import com.novin.invoicemanagementsystem.entity.User;
+import com.novin.invoicemanagementsystem.model.UserDto;
 import com.novin.invoicemanagementsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,8 +14,13 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/getAllUsers")
-    public List<User> getAllUsers() {
+    @GetMapping("/getAllUsers")
+    public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public UserDto deleteUserById(@PathVariable Long id) {
+        return userService.deleteById(id);
     }
 }

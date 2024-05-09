@@ -10,18 +10,20 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Token {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     private String token;
+
     @NotNull
     private boolean loggedOut;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

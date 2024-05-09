@@ -22,16 +22,22 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+
+    @NotBlank(message = "First name is mandatory")
     private String firstName;
-    @NotNull
+
+    @NotBlank(message = "Last name is mandatory")
     private String lastName;
-    @NotNull
+
+    @NotBlank(message = "Username is mandatory")
     @Column(unique = true)
     private String userName;
-    @NotNull
+
+    @NotBlank(message = "Password is mandatory")
     @Column(length = 60)
     private String password;
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "roles_of_users",
@@ -39,6 +45,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Collection<Role> roles;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

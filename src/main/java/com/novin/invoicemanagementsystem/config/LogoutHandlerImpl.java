@@ -1,6 +1,5 @@
 package com.novin.invoicemanagementsystem.config;
 
-import com.novin.invoicemanagementsystem.entity.Token;
 import com.novin.invoicemanagementsystem.repository.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

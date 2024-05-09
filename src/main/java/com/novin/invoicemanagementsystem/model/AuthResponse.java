@@ -1,4 +1,4 @@
-package com.novin.invoicemanagementsystem.config;
+package com.novin.invoicemanagementsystem.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -22,16 +22,22 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+
+    @NotBlank(message = "Customer name is mandatory")
     private String customerName;
-    @NotNull
+
+    @NotNull(message = "Creation date is mandatory")
     private Date creationDate;
-    @NotNull
+
+    @NotNull(message = "Deadline is mandatory")
     private Date deadline;
-    @NotBlank
+
+    @NotBlank(message = "Item name is mandatory")
     private String itemName;
-    @NotBlank
+
+    @NotBlank(message = "Comment is mandatory")
     private String comment;
-    @NotNull
+
+    @NotNull(message = "Price is mandatory")
     private Integer price;
 }

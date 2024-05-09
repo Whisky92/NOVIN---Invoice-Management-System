@@ -19,7 +19,7 @@ public class InvoiceController {
         return invoiceService.getAllInvoices();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public Invoice getInvoiceById(@PathVariable Long id) {
         return invoiceService.getInvoiceById(id);
     }

@@ -1,9 +1,9 @@
 package com.novin.invoicemanagementsystem.service;
 
-
-import com.novin.invoicemanagementsystem.config.AuthResponse;
+import com.novin.invoicemanagementsystem.model.AuthResponse;
 import com.novin.invoicemanagementsystem.entity.Token;
 import com.novin.invoicemanagementsystem.entity.User;
+import com.novin.invoicemanagementsystem.model.UserCredentials;
 import com.novin.invoicemanagementsystem.repository.TokenRepository;
 import com.novin.invoicemanagementsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,13 +50,13 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponse authenticate(User userData) {
+    public AuthResponse authenticate(UserCredentials credentials) {
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        userData.getUsername(),
-                        userData.getPassword()
+                        credentials.getUserName(),
+                        credentials.getPassword()
                 ));
-        User user = userRepository.findByUserName(userData.getUsername()).orElseThrow();
+        User user = userRepository.findByUserName(credentials.getUserName()).orElseThrow();
         String jwtToken = jwtService.generateToken(user);
 
         revokeAllTokenByUser(user);
