@@ -1,7 +1,6 @@
 package com.novin.invoicemanagementsystem.controller;
 
 import com.novin.invoicemanagementsystem.model.AuthResponse;
-import com.novin.invoicemanagementsystem.entity.User;
 import com.novin.invoicemanagementsystem.model.UserCredentials;
 import com.novin.invoicemanagementsystem.model.UserInput;
 import com.novin.invoicemanagementsystem.service.AuthService;
@@ -21,11 +20,11 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody UserInput userInput) {
-        return ResponseEntity.ok(authService.register(userInput));
+        return ResponseEntity.ok().body(authService.register(userInput));
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody UserCredentials userCredentials) {
-        return ResponseEntity.ok(authService.authenticate(userCredentials));
+        return ResponseEntity.ok().body(authService.authenticate(userCredentials));
     }
 }

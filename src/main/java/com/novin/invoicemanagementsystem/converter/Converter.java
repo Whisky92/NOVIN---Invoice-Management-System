@@ -27,7 +27,7 @@ public class Converter {
     }
 
     public List<Role> convertRoleNamesToRoles(RoleInput roleInput) {
-        List roles = roleInput.getRoles().stream()
+        return roleInput.getRoles().stream()
                 .map(roleName -> {
                     Role role = roleRepository.findByName(roleName);
 
@@ -36,6 +36,5 @@ public class Converter {
                     }
                     return role;
                 }).collect(Collectors.toList());
-        return roles;
     }
 }

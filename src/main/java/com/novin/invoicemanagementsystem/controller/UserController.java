@@ -5,6 +5,7 @@ import com.novin.invoicemanagementsystem.model.UserOutput;
 import com.novin.invoicemanagementsystem.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +19,19 @@ public class UserController {
 
     @GetMapping("/getAllUsers")
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public List<UserOutput> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserOutput>> getAllUsers() {
+        return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public UserOutput deleteUserById(@PathVariable Long id) {
-        return userService.deleteById(id);
+    public ResponseEntity<UserOutput> deleteUserById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(userService.deleteById(id));
     }
 
     @PutMapping("/{id}/setRoles")
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
-    public String setRoles(@PathVariable Long id, @Valid @RequestBody RoleInput roleInput) {
-        return userService.setRoleOfUser(id, roleInput);
+    public ResponseEntity<String> setRoles(@PathVariable Long id, @Valid @RequestBody RoleInput roleInput) {
+        return ResponseEntity.ok().body(userService.setRoleOfUser(id, roleInput));
     }
 }
