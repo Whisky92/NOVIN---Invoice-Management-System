@@ -1,5 +1,6 @@
 package com.novin.invoicemanagementsystem.controller;
 
+import com.novin.invoicemanagementsystem.exception.UsernameAlreadyExistsException;
 import com.novin.invoicemanagementsystem.model.AuthResponse;
 import com.novin.invoicemanagementsystem.model.UserCredentials;
 import com.novin.invoicemanagementsystem.model.UserInput;
@@ -19,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody UserInput userInput) {
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody UserInput userInput) throws UsernameAlreadyExistsException {
         return ResponseEntity.ok().body(authService.register(userInput));
     }
 

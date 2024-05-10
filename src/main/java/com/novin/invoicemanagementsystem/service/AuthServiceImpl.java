@@ -2,6 +2,7 @@ package com.novin.invoicemanagementsystem.service;
 
 import com.novin.invoicemanagementsystem.entity.Token;
 import com.novin.invoicemanagementsystem.entity.User;
+import com.novin.invoicemanagementsystem.exception.UsernameAlreadyExistsException;
 import com.novin.invoicemanagementsystem.model.AuthResponse;
 import com.novin.invoicemanagementsystem.model.UserCredentials;
 import com.novin.invoicemanagementsystem.model.UserInput;
@@ -24,10 +25,10 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public AuthResponse register(UserInput userInput) {
+    public AuthResponse register(UserInput userInput) throws UsernameAlreadyExistsException {
 
         if (userService.findUserByUsername(userInput.getUserName()).isPresent()) {
-             return new AuthResponse(null, "A user with such username already exists");
+            throw new UsernameAlreadyExistsException("A user with such name already exitsts");
         }
 
         User newUser = userService.createUser(userInput);
