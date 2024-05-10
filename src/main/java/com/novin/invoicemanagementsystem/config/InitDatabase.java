@@ -5,7 +5,6 @@ import com.novin.invoicemanagementsystem.entity.User;
 import com.novin.invoicemanagementsystem.repository.RoleRepository;
 import com.novin.invoicemanagementsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;

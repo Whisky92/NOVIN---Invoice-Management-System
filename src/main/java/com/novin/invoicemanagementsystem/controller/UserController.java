@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -33,5 +34,15 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMINISTRATOR')")
     public ResponseEntity<String> setRoles(@PathVariable Long id, @Valid @RequestBody RoleInput roleInput) {
         return ResponseEntity.ok().body(userService.setRoleOfUser(id, roleInput));
+    }
+
+    @GetMapping("/getUser/{userName}")
+    public ResponseEntity<UserOutput> getUserByUserName(@PathVariable String userName) {
+        return ResponseEntity.ok().body(userService.getUserByUserName(userName));
+    }
+
+    @GetMapping("/getRole/{userName}")
+    public ResponseEntity<Collection<String>> getRolesByUserName(@PathVariable String userName) {
+        return ResponseEntity.ok().body(userService.getRolesByUserName(userName));
     }
 }

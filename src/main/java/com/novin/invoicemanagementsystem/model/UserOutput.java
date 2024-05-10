@@ -1,7 +1,6 @@
 package com.novin.invoicemanagementsystem.model;
 
 import com.novin.invoicemanagementsystem.entity.Role;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

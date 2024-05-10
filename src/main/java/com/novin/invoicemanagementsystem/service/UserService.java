@@ -5,6 +5,7 @@ import com.novin.invoicemanagementsystem.model.RoleInput;
 import com.novin.invoicemanagementsystem.model.UserInput;
 import com.novin.invoicemanagementsystem.model.UserOutput;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +21,8 @@ public interface UserService {
     UserOutput deleteById(Long id);
 
     String setRoleOfUser(Long id, RoleInput roleInput);
+
+    Collection<String> getRolesByUserName(String userName);
+
+    UserOutput getUserByUserName(String userName);
 }

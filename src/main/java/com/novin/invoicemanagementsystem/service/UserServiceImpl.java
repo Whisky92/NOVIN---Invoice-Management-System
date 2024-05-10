@@ -6,11 +6,8 @@ import com.novin.invoicemanagementsystem.entity.User;
 import com.novin.invoicemanagementsystem.model.RoleInput;
 import com.novin.invoicemanagementsystem.model.UserInput;
 import com.novin.invoicemanagementsystem.model.UserOutput;
-import com.novin.invoicemanagementsystem.repository.RoleRepository;
 import com.novin.invoicemanagementsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +34,14 @@ public class UserServiceImpl implements UserService {
                 .password(passwordEncoder.encode(userInput.getPassword()))
                 .roles(converter.convertRoleNamesToRoles(userInput.getRoles()))
                 .build();
+    }
+
+    @Override
+    public UserOutput getUserByUserName(String userName) {
+        User user = findUserByUsername(userName)
+                .orElseThrow(() -> new UsernameNotFoundException("User with such name does not exits"));
+
+        return converter.convertUserToUserOutput(user);
     }
 
     @Override
@@ -75,5 +80,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return "Rules have been successfully updated";
+    }
+
+    @Override
+    public Collection<String> getRolesByUserName(String userName) {
+        List<Role> roles = userRepository.findRolesByUserName(userName)
+                .orElseThrow(() -> new UsernameNotFoundException("User with such name does not exits"));
+
+        return roles.stream().map(Role::getName).collect(Collectors.toList());
     }
 }
